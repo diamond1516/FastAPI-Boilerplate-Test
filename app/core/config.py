@@ -2,6 +2,7 @@ import os
 from pydantic import BaseSettings
 from app.core import security
 from pathlib import Path
+from datetime import timedelta
 
 
 BASE_DIR = security.BASE_DIR
@@ -9,7 +10,7 @@ BASE_DIR = security.BASE_DIR
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE: timedelta = timedelta(days=1)
     SERVER_NAME: str = "localhost"
     SERVER_HOST: str = os.getenv("SERVER_HOST", "http://localhost")
     PROJECT_NAME: str = "FastAPI Boilerplate"
