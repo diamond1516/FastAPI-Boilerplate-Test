@@ -1,8 +1,11 @@
 from sqlalchemy import Column, Integer, DateTime, func
-from app.db.base import Base
+from app.db import base
 
 
-class BaseModel(Base):
+MetaData = base.Base.metadata
+
+
+class BaseModel(base.Base):
     __abstract__ = True
     __tablename__ = "basemodel"
 
