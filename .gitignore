@@ -380,3 +380,4 @@ Temporary Items
 
 celerybeat-schedule.db
 convert_to_pdf/
+keys/
