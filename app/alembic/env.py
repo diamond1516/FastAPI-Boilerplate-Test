@@ -4,9 +4,8 @@ from logging.config import fileConfig
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
-from app.db import Base, creat_all
 from app.core import security
-
+from app.db import Base
 from alembic import context
 
 # this is the Alembic Config object, which provides
@@ -84,7 +83,6 @@ def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
 
     asyncio.run(run_async_migrations())
-    asyncio.run(creat_all())
 
 
 if context.is_offline_mode():
