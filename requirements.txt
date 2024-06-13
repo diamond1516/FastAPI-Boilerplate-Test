@@ -6,5 +6,7 @@ pyjwt
 alembic==1.13.1
 pydantic~=1.10.15
 psycopg2-binary
+asyncpg
 python-dotenv~=1.0.1
 bcrypt==4.1.1
+black

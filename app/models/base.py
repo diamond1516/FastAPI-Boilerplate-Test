@@ -8,7 +8,3 @@ class BaseModel(Base):
 
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
-
-
-class UserModel(BaseModel):
-    name = Column(String, unique=True, nullable=False)
