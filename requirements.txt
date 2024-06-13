@@ -1,6 +1,6 @@
 fastapi~=0.68.0
 uvicorn==0.15.0
-sqlalchemy~=1.4.25
+sqlalchemy[asyncio]
 passlib==1.7.4
 pyjwt
 alembic==1.13.1

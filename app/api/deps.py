@@ -1,5 +1,5 @@
 from typing import Generator
-from app.db.session import async_session
+from app.db.database import async_session
 
 
 def get_db() -> Generator:
