@@ -1,11 +1,8 @@
-from sqlalchemy import Column, Integer, DateTime, func
-from app.db import base
+from sqlalchemy import Column, Integer, DateTime, func, String
+from app.db.base import Base
 
 
-MetaData = base.Base.metadata
-
-
-class BaseModel(base.Base):
+class BaseModel(Base):
     __abstract__ = True
     __tablename__ = "basemodel"
 
@@ -13,3 +10,7 @@ class BaseModel(base.Base):
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
 
+
+class User(BaseModel):
+    __tablename__ = "users"
+    name = Column(String, unique=True, nullable=False)
