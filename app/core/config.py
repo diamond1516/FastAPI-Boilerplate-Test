@@ -5,23 +5,24 @@ from pathlib import Path
 from datetime import timedelta
 
 
-BASE_DIR = security.BASE_DIR
+class DbSettings(BaseSettings):
+    ECHO: bool = False
+    URL: str = security.DB_SECURITY.get_db_url()
 
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     ACCESS_TOKEN_EXPIRE: timedelta = timedelta(days=1)
     SERVER_NAME: str = "localhost"
-    SERVER_HOST: str = os.getenv("SERVER_HOST", "http://localhost")
+    SERVER_HOST: str = security.MAIN_SECURITY.HOST
     PROJECT_NAME: str = "FastAPI Boilerplate"
-    SQLALCHEMY_DATABASE_URI: str = security.DATABASE_URI
     ALGORITHM: str = "RS256"
-    PUBLIC_KEY_PATH: Path = BASE_DIR / 'keys/public.pem'
-    PRIVATE_KEY_PATH: Path = BASE_DIR / 'keys/private.pem'
-    DB_ECHO: bool = True
+    PUBLIC_KEY_PATH: Path = security.BASE_DIR / 'keys/public.pem'
+    PRIVATE_KEY_PATH: Path = security.BASE_DIR / 'keys/private.pem'
 
     class Config:
         case_sensitive = True
 
 
-settings = Settings()
+SETTINGS = Settings()
+DB_SETTINGS = DbSettings()
