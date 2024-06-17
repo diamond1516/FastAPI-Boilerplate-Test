@@ -1,3 +1,3 @@
-from fastapi import APIRouter
+from app.core.routes import Routes
 
-api_router = APIRouter()
+__routes__ = Routes(routers=())
