@@ -2,6 +2,10 @@ from fastapi import FastAPI
 from app.api.api import __routes__
 
 
+async def on_startup() -> None:
+    print('The app is working 🎊🎉🎛')
+
+
 class Server:
     __app: FastAPI
 
@@ -19,4 +23,4 @@ class Server:
 
     @staticmethod
     def __register_events(app: FastAPI):
-        app.on_event('startup')
+        app.on_event('startup')(on_startup)
