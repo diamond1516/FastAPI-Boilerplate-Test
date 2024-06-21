@@ -17,8 +17,8 @@ class Settings(BaseSettings):
     SERVER_HOST: str = security.MAIN_SECURITY.HOST
     PROJECT_NAME: str = "FastAPI Boilerplate"
     ALGORITHM: str = "RS256"
-    PUBLIC_KEY_PATH: Path = security.BASE_DIR / 'keys/public.pem'
-    PRIVATE_KEY_PATH: Path = security.BASE_DIR / 'keys/private.pem'
+    PUBLIC_KEY_PATH: Path = security.BASE_DIR / 'keys/public_key.pem'
+    PRIVATE_KEY_PATH: Path = security.BASE_DIR / 'keys/private_key.pem'
 
     class Config:
         case_sensitive = True
