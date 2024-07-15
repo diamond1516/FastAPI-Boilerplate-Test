@@ -31,7 +31,7 @@ class Utility:
         em['Subject'] = subject
         em.set_content(msg)
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(MAIN_SECURITY.EMAIL_HOST, 465, context=context) as smtp:
+        with smtplib.SMTP_SSL(MAIN_SECURITY.EMAIL_HOST, MAIN_SECURITY.EMAIL_PORT, context=context) as smtp:
             smtp.login(MAIN_SECURITY.EMAIL, MAIN_SECURITY.EMAIL_PASSWORD)
             smtp.sendmail(MAIN_SECURITY.EMAIL, email, em.as_string())
 
