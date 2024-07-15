@@ -1,12 +1,12 @@
 import jwt
-from app.core.config import SETTINGS
-from datetime import datetime, timedelta
+from app.core import SETTINGS
+from datetime import datetime
 
 
 async def encode_jwt(
         payload: dict,
         algorithm=SETTINGS.ALGORITHM,
-        private_key: str = SETTINGS.PRIVATE_KEY_PATH.read_text(),
+        private_key: str = SETTINGS.PRIVATE_KEY,
 ):
 
     payload.update(
@@ -22,7 +22,7 @@ async def encode_jwt(
 
 async def decode_jwt(
         token: str,
-        public_key: str = SETTINGS.PUBLIC_KEY_PATH.read_text(),
+        public_key: str = SETTINGS.PUBLIC_KEY,
         algorithm: str = SETTINGS.ALGORITHM,
 ):
     return jwt.decode(

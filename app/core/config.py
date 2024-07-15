@@ -12,6 +12,7 @@ class DbSettings(BaseSettings):
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
+    WEBSOCKET_PREFIX: str = '/ws'
     ACCESS_TOKEN_EXPIRE: timedelta = timedelta(days=1)
     SERVER_NAME: str = "localhost"
     SERVER_HOST: str = security.MAIN_SECURITY.HOST

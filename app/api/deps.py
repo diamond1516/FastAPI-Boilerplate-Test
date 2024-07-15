@@ -1,12 +1,9 @@
-# from typing import Generator
-# from app.db.database import async_session
-#
-#
-# def get_db() -> Generator:
-#     try:
-#         db = async_session()
-#         yield db
-#     finally:
-#         db.close()
-#
-#
+from typing import AsyncGenerator
+
+from app.db import db_helper
+
+
+async def get_db() -> AsyncGenerator:
+    return db_helper.get_scoped_session()
+
+

@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-from app.core.server import Server
-from app.core.config import SETTINGS
+from app.core import Server, SETTINGS
 
 
 def app(_=None) -> FastAPI:
