@@ -6,6 +6,7 @@ class Base(DeclarativeBase):
 
     @declared_attr.directive
     def __tablename__(cls) -> str:
-        return f"{cls.__name__.lower()}s"
+        name = str(cls.__name__)
+        return ''.join(['_' + c.lower() if c.isupper() else c for c in name]).lstrip('_') + 's'
 
     id: Mapped[int] = mapped_column(primary_key=True)
