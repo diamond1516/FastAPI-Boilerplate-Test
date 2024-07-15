@@ -5,14 +5,15 @@ class IsAuthenticated(BasePermission):
 
     async def has_permission(self, user, request, view=None):
 
-        return user and user.status == 'new'
+        return False
 
 
 class IsCodeActive(BasePermission):
 
     async def has_permission(self, user, request, view=None):
 
-        return user and user.status == 'active'
+        return False
+
 
 
 
