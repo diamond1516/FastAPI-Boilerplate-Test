@@ -1,6 +1,5 @@
 from pydantic import BaseSettings
 from app.core import security
-from pathlib import Path
 from datetime import timedelta
 
 
