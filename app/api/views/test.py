@@ -24,10 +24,15 @@ class Image(BaseModel):
 class ProductSchema(BaseModel):
     name: str
     price: float
+    images: List[Image]
+
+    class Config:
+        orm_mode = True
 
 
 @router.post(
     '/products/',
+    response_model=ProductSchema,
 )
 async def create_product(
         data: str = Form(...),
@@ -48,7 +53,13 @@ async def create_product(
 
     await db.commit()
     await db.refresh(product)
-    return product
+    images = await product.images
+
+    return ProductSchema(
+        name=product.name,
+        price=product.price,
+        images=images,
+    )
 
 
 @router.post(
