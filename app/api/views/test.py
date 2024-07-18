@@ -24,7 +24,7 @@ class FormattedDatetime(str):
 
     @classmethod
     def validate(cls, value):
-        return f'http://127.0.0.1:8001/{cls.MEDIA_URL}{value}'
+        return f'http://127.0.0.1:8000/{cls.MEDIA_URL}{value}'
 
 
 class Image(BaseModel):
