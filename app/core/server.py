@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.api import __routes__
+from app.core import SETTINGS
 
 
 async def on_startup() -> None:
@@ -46,4 +47,4 @@ class Server:
 
     @classmethod
     def __register_media_files(cls, app: FastAPI):
-        app.mount("/media", StaticFiles(directory="media"), name="media")
+        app.mount(SETTINGS.MEDIA_DIR, StaticFiles(directory="media"), name="media")
