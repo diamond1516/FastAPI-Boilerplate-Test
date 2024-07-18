@@ -3,6 +3,7 @@ import os
 from sqlalchemy import String
 from sqlalchemy.types import TypeDecorator
 from starlette.datastructures import UploadFile
+from app.core.storages import LOCAL_STORAGE
 
 
 class FileObject(object):
@@ -35,7 +36,7 @@ class FileObject(object):
 class FileField(TypeDecorator):
     impl = String
 
-    def __init__(self, storage_manager, upload_folder, *args, **kwargs):
+    def __init__(self, upload_folder, storage_manager=LOCAL_STORAGE, *args, **kwargs):
         self.storage_manager = storage_manager
         self.upload_folder = upload_folder
         super().__init__(*args, **kwargs)
