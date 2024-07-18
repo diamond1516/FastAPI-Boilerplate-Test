@@ -67,12 +67,12 @@ async def get_file(
     result = await db.execute(select(TestModel))
     items = result.scalars().all()
 
-    # first_item = items[0]
-    #
-    # new = TestModel(file=first_item.file)
-    #
-    # db.add(new)
-    # await db.commit()
-    # await db.refresh(new)
+    first_item = items[0]
+
+    new = TestModel(file=first_item.file)
+
+    db.add(new)
+    await db.commit()
+    await db.refresh(new)
 
     return items
