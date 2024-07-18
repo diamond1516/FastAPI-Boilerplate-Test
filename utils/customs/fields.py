@@ -16,6 +16,9 @@ class FileObject(object):
     def __repr__(self):
         return self.path
 
+    def __str__(self):
+        return f'{self.MEDIA_URL}{self.path}'
+
     @property
     def filename(self):
         return os.path.basename(self.path)
@@ -33,9 +36,6 @@ class FileObject(object):
         file_path = os.path.join(self.MEDIA_URL, self.path)
         f = open(file_path, 'rb')
         return f
-
-    def __str__(self):
-        return f'{self.MEDIA_URL}{self.path}'
 
 
 class FileField(TypeDecorator):
