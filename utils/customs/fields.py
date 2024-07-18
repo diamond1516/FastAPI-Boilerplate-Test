@@ -14,6 +14,9 @@ class FileObject(object):
     def __init__(self, path):
         self.path = path
 
+    def __repr__(self):
+        return self.path
+
     @property
     def filename(self):
         return os.path.basename(self.path)
@@ -83,7 +86,6 @@ class FileField(TypeDecorator):
         super().__init__(*args, **kwargs)
 
     def process_bind_param(self, value, dialect):
-
         if isinstance(value, (UploadFile, FileObject)):
             file_path = self.storage_manager.save(value, self.upload_folder)
             return file_path
