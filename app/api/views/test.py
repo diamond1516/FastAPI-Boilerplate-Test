@@ -42,9 +42,6 @@ class FormattedDatetime(str):
 
     @classmethod
     def validate(cls, value):
-
-        print(value.extension)
-        print(value)
         return f'http://127.0.0.1:8001/{value}'
 
 

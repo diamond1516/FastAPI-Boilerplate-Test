@@ -10,9 +10,32 @@ import os
 from werkzeug.utils import secure_filename
 
 
+class FileObject(object):
+    def __init__(self, path):
+        self.path = path
+
+    @property
+    def name(self):
+        return self.path
+
+    @property
+    def file_url(self):
+        return self.path
+
+    @property
+    def extension(self):
+        return os.path.splitext(self.path)[1]
+
+    @property
+    def file(self):
+        return open(self.path, 'rb')
+
+    def __str__(self):
+        return self.path
+
+
 class StorageManager(ABC):
     MEDIA_URL = 'media/'
-    STATIC_URL = 'static/'
 
     @abstractmethod
     def save(self, file, upload_folder):
@@ -64,29 +87,5 @@ class FileField(TypeDecorator):
             return file_path
         return str(value)
 
-    def process_result_value(self, value, dialect):
-        return FileString(value)
-
-
-class FileString(object):
-    def __init__(self, path):
-        self.path = path
-
-    @property
-    def name(self):
-        return self.path
-
-    @property
-    def file_url(self):
-        return self.path
-
-    @property
-    def file_extension(self):
-        return os.path.splitext(self.path)[1]
-
-    @property
-    def file(self):
-        return open(self.path, 'rb')
-
-    def __str__(self):
-        return self.path
+    def process_result_value(self, value, dialect) -> FileObject:
+        return FileObject(value)
