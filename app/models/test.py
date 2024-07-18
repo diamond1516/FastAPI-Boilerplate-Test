@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column
 from app.models.base import BaseModel
 from utils.customs.fields import FileField
+from app.core import LOCAL_STORAGE
 
 
 class TestModel(BaseModel):
-    file = Column(FileField(storage_manager=LocalStorageManager, upload_folder='salom/', length=255))
+    file = Column(FileField(storage_manager=LOCAL_STORAGE, upload_folder='salom/', length=255))

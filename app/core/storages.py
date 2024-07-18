@@ -42,3 +42,7 @@ class LocalStorageManager(StorageManager):
         file_path = os.path.join(self.MEDIA_URL, path)
         if os.path.exists(file_path):
             os.remove(file_path)
+
+
+LOCAL_STORAGE = LocalStorageManager()
+
