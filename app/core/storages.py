@@ -29,11 +29,12 @@ class StorageManager(ABC):
 class LocalStorageManager(StorageManager):
 
     def save(self, file, upload_folder):
+
         new_filename = self._generate_new_filename(secure_filename(file.filename))
         folder_path = os.path.join(self.MEDIA_URL, upload_folder)
         file_path = os.path.join(folder_path, new_filename)
-
         os.makedirs(folder_path, exist_ok=True)
+
         with open(file_path, 'wb') as f:
             f.write(file.file.read())
 
