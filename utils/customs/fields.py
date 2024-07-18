@@ -20,18 +20,12 @@ class StorageManager:
 class LocalStorageManager(StorageManager):
     upload_folder = None
 
-    # def __init__(self, base_url):
-    #     self.base_url = base_url
-
     def save(self, file):
         filename = secure_filename(file.filename)
         file_path = os.path.join(self.upload_folder, filename)
         with open(file_path, 'wb') as f:
             f.write(file.file.read())
         return file_path
-
-    # def get_url(self, filename):
-    #     return os.path.join(self.base_url, filename)
 
     def get_path(self, filename):
         return os.path.join(self.upload_folder, filename)
