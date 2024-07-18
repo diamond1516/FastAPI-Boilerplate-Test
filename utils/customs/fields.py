@@ -1,13 +1,11 @@
+import os
 import random
 import string
-from datetime import datetime
-
-from sqlalchemy import String
-from starlette.datastructures import UploadFile
-from sqlalchemy.types import TypeDecorator
 from abc import ABC, abstractmethod
 
-import os
+from sqlalchemy import String
+from sqlalchemy.types import TypeDecorator
+from starlette.datastructures import UploadFile
 from werkzeug.utils import secure_filename
 
 
@@ -83,7 +81,6 @@ class FileField(TypeDecorator):
 
     def __init__(self, storage_manager, upload_folder, *args, **kwargs):
         self.storage_manager = storage_manager()
-        self.storage_manager.upload_folder = upload_folder
         self.upload_folder = upload_folder
         super().__init__(*args, **kwargs)
 
