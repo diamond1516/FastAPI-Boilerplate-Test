@@ -1,18 +1,29 @@
 from sqlalchemy import String
 from starlette.datastructures import UploadFile
 from sqlalchemy.types import TypeDecorator
+from abc import ABC, abstractmethod
 
 import os
 from werkzeug.utils import secure_filename
 
 
-class StorageManager:
+class StorageManager(ABC):
+    MEDIA_URL = ...
+    STATIC_URL = ...
+
+    @abstractmethod
     def save(self, file, upload_folder):
         raise NotImplementedError
 
+    @abstractmethod
+    def delete(self, file):
+        raise NotImplementedError
+
+    @abstractmethod
     def get_url(self, filename):
         raise NotImplementedError
 
+    @abstractmethod
     def get_path(self, filename):
         raise NotImplementedError
 
@@ -27,8 +38,14 @@ class LocalStorageManager(StorageManager):
             f.write(file.file.read())
         return file_path
 
+    def delete(self, file):
+        file_path = os.path.join(file.filename, '')
+
     def get_path(self, filename):
         return os.path.join(self.upload_folder, filename)
+
+    def get_url(self, filename):
+        pass
 
 
 class FileField(TypeDecorator):
