@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.api import __routes__
 
 
@@ -16,6 +17,7 @@ class Server:
         self.__register_events(app)
         self.__register_middlewares(app)
         self.__register_websocket(app)
+        self.__register_media_files(app)
 
     def get_app(self):
         return self.__app
@@ -41,3 +43,7 @@ class Server:
             allow_methods=["*"],
             allow_headers=["*"],
         )
+
+    @classmethod
+    def __register_media_files(cls, app: FastAPI):
+        app.mount("/media", StaticFiles(directory="media"), name="media")

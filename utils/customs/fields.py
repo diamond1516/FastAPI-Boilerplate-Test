@@ -4,6 +4,7 @@ from sqlalchemy import String
 from starlette.datastructures import UploadFile
 from sqlalchemy.types import TypeDecorator
 from abc import ABC, abstractmethod
+from fastapi import Request
 
 import os
 from werkzeug.utils import secure_filename
@@ -49,8 +50,12 @@ class LocalStorageManager(StorageManager):
             f.write(file.file.read())
         return file_path
 
-    def delete(self, file):
-        pass
+    def delete(self, path):
+
+        if os.path.exists(path):
+            os.remove(path)
+            return True
+        return False
 
     def get_path(self, filename):
         pass
@@ -69,15 +74,13 @@ class FileField(TypeDecorator):
         super().__init__(*args, **kwargs)
 
     def process_bind_param(self, value, dialect):
+
         if isinstance(value, UploadFile):
             file_path = self.storage_manager.save(value, self.upload_folder)
             return file_path
         return str(value)
 
     def process_result_value(self, value, dialect):
-        print(value)
-        if value:
-            return open(value, 'rb')  # Faylni o'qib olish
         return value  # Qiymatni o'zgarmas qaytaradi
 
     def file_name(self, value):

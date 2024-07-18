@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     PRIVATE_KEY: str = (security.BASE_DIR / 'keys/private_key.pem').read_text()
     DEBUG: bool = True
 
+
+
     class Config:
         case_sensitive = True
 
