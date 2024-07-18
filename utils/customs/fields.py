@@ -31,8 +31,8 @@ class FileObject(object):
     @property
     def file(self):
         file_path = os.path.join(self.MEDIA_URL, self.path)
-        with open(file_path, 'rb') as f:
-            return UploadFile(filename=self.filename, file=f).file
+        f = open(file_path, 'rb')
+        return f
 
     def __str__(self):
         return f'{self.MEDIA_URL}{self.path}'

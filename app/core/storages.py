@@ -7,7 +7,7 @@ from app.core.config import SETTINGS
 
 
 class StorageManager(ABC):
-    MEDIA_URL = SETTINGS.MEDIA_URL
+    MEDIA_URL: str = SETTINGS.MEDIA_URL
 
     @abstractmethod
     def save(self, file, upload_folder):
@@ -46,4 +46,3 @@ class LocalStorageManager(StorageManager):
 
 
 LOCAL_STORAGE = LocalStorageManager()
-
