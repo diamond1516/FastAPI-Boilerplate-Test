@@ -19,6 +19,7 @@ class Server:
         self.__register_middlewares(app)
         self.__register_websocket(app)
         self.__register_media_files(app)
+        self.__register_static_files(app)
 
     def get_app(self):
         return self.__app
@@ -48,3 +49,7 @@ class Server:
     @staticmethod
     def __register_media_files(app: FastAPI):
         app.mount(f'/{SETTINGS.MEDIA_URL}', StaticFiles(directory="media/"), name="media")
+
+    @staticmethod
+    def __register_static_files(app: FastAPI):
+        app.mount(f'/{SETTINGS.STATIC_URL}', StaticFiles(directory="static"), name="static")
