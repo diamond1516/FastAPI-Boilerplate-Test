@@ -53,12 +53,11 @@ async def create_product(
 
     await db.commit()
     await db.refresh(product)
-    images = await product.images
 
     return ProductSchema(
         name=product.name,
         price=product.price,
-        images=images,
+        images=product.images,
     )
 
 
