@@ -17,7 +17,7 @@ class FileObject(object):
         return self.path
 
     def __str__(self):
-        return f'{self.MEDIA_URL}{self.path}'
+        return str(self.path)
 
     @property
     def filename(self):
