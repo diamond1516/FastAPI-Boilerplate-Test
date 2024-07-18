@@ -45,6 +45,6 @@ class Server:
             allow_headers=["*"],
         )
 
-    @classmethod
-    def __register_media_files(cls, app: FastAPI):
+    @staticmethod
+    def __register_media_files(app: FastAPI):
         app.mount(f'/{SETTINGS.MEDIA_URL}', StaticFiles(directory="media"), name="media")
