@@ -1,4 +1,5 @@
 import random
+import string
 from datetime import datetime
 
 from sqlalchemy import String
@@ -50,9 +51,11 @@ class StorageManager(ABC):
 
     @classmethod
     def _generate_new_filename(cls, filename):
+
         name, ext = os.path.splitext(filename)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        new_filename = f"{name}_{timestamp}{ext}"
+        random_chars = ''.join(random.choices(string.ascii_letters + string.digits, k=7))
+        new_filename = f"{name}_{random_chars}{ext}"
+
         return new_filename
 
 
