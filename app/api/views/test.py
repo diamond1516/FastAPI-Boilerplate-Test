@@ -20,12 +20,6 @@ class Image(BaseModel):
         orm_mode = True
 
 
-def get_file_url(file_path: str) -> str:
-    from starlette.routing import Router
-    _router = Router()
-    return _router.url_path_for("media/", path=file_path)
-
-
 @router.post(
     '/file-upload/',
     response_model=Image,
