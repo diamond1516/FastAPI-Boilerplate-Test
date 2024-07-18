@@ -51,9 +51,8 @@ class StorageManager(ABC):
     @classmethod
     def _generate_new_filename(cls, filename):
         name, ext = os.path.splitext(filename)
-        extra = str(random.randint(1, 100))
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        new_filename = f"{name}{extra}_{timestamp}{ext}"
+        new_filename = f"{name}_{timestamp}{ext}"
         return new_filename
 
 
