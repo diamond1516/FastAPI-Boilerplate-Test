@@ -4,9 +4,12 @@ from sqlalchemy import String
 from sqlalchemy.types import TypeDecorator
 from starlette.datastructures import UploadFile
 from app.core.storages import LOCAL_STORAGE
+from app.core import SETTINGS
 
 
 class FileObject(object):
+    MEDIA_URL = SETTINGS.MEDIA_URL
+
     def __init__(self, path):
         self.path = path
 
@@ -27,7 +30,9 @@ class FileObject(object):
 
     @property
     def file(self):
-        return UploadFile(self.path).file
+        file_path = os.path.join(self.MEDIA_URL, self.path)
+        with open(file_path, 'rb') as f:
+            return f.read()
 
     def __str__(self):
         return str(self.path)

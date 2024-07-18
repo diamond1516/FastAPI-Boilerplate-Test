@@ -47,4 +47,4 @@ class Server:
 
     @classmethod
     def __register_media_files(cls, app: FastAPI):
-        app.mount(SETTINGS.MEDIA_DIR, StaticFiles(directory="media"), name="media")
+        app.mount(SETTINGS.MEDIA_URL, StaticFiles(directory="media"), name="media")
