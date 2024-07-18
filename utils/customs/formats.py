@@ -1,4 +1,5 @@
 from app.core import SETTINGS
+from utils.customs.fields import FileObject
 
 
 class FileFieldFormat(str):
@@ -10,4 +11,6 @@ class FileFieldFormat(str):
 
     @classmethod
     def validate(cls, value):
-        return f'{SETTINGS.SERVER_HOST}{cls.MEDIA_URL}{str(value)}'
+        if isinstance(value, FileObject):
+            return f'{SETTINGS.SERVER_HOST}{cls.MEDIA_URL}{str(value)}'
+        return value
