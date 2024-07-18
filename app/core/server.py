@@ -5,7 +5,7 @@ from app.api import __routes__
 from app.core import SETTINGS
 
 
-async def on_startup() -> None:
+def on_startup() -> None:
     print('The app is working 🎊🎉🎛')
 
 
