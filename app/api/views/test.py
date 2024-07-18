@@ -1,13 +1,11 @@
 from typing import List
-
 from fastapi import APIRouter, Depends, UploadFile, File
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from pydantic import BaseModel
-
 from app.api import deps
 from app.models.test import TestModel
+from utils.customs import FileFieldFormat
 
 router = APIRouter(
     prefix="/test",
@@ -15,19 +13,8 @@ router = APIRouter(
 )
 
 
-class FormattedDatetime(str):
-
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, value):
-        return f'http://127.0.0.1:8000/{value}'
-
-
 class Image(BaseModel):
-    file: FormattedDatetime
+    file: FileFieldFormat
 
     class Config:
         orm_mode = True
