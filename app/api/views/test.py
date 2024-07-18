@@ -15,25 +15,6 @@ router = APIRouter(
 )
 
 
-def get_file_url(file_path: str) -> str:
-    from starlette.routing import Router
-    _router = Router()
-    return _router.url_path_for("media/", path=file_path)
-
-
-@router.post('/file-upload/')
-async def upload_file(
-        file: UploadFile = File(...),
-        db: AsyncSession = Depends(deps.get_db),
-):
-    new_obj = TestModel(file=file)
-    db.add(new_obj)
-    await db.commit()
-    await db.refresh(new_obj)
-
-    return new_obj
-
-
 class FormattedDatetime(str):
     MEDIA_URL = ''
 
@@ -51,6 +32,28 @@ class Image(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+def get_file_url(file_path: str) -> str:
+    from starlette.routing import Router
+    _router = Router()
+    return _router.url_path_for("media/", path=file_path)
+
+
+@router.post(
+    '/file-upload/',
+    response_model=Image,
+)
+async def upload_file(
+        file: UploadFile = File(...),
+        db: AsyncSession = Depends(deps.get_db),
+):
+    new_obj = TestModel(file=file)
+    db.add(new_obj)
+    await db.commit()
+    await db.refresh(new_obj)
+
+    return new_obj
 
 
 @router.get(
@@ -73,4 +76,3 @@ async def get_file(
     await db.refresh(new)
 
     return items
-
