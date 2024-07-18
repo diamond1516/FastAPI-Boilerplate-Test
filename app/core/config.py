@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     PUBLIC_KEY: str = (security.BASE_DIR / 'keys/public_key.pem').read_text()
     PRIVATE_KEY: str = (security.BASE_DIR / 'keys/private_key.pem').read_text()
     DEBUG: bool = True
-    MEDIA_URL: str = '/media'
+    MEDIA_URL: str = 'media/'
 
     class Config:
         case_sensitive = True

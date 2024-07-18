@@ -35,7 +35,7 @@ class FileObject(object):
             return f.read()
 
     def __str__(self):
-        return str(self.path)
+        return f'{self.MEDIA_URL}{self.path}'
 
 
 class FileField(TypeDecorator):

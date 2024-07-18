@@ -3,10 +3,11 @@ import random
 import string
 from abc import ABC, abstractmethod
 from werkzeug.utils import secure_filename
+from app.core.config import SETTINGS
 
 
 class StorageManager(ABC):
-    MEDIA_URL = 'media/'
+    MEDIA_URL = SETTINGS.MEDIA_URL
 
     @abstractmethod
     def save(self, file, upload_folder):
