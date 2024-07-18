@@ -23,7 +23,6 @@ def get_file_url(file_path: str) -> str:
 
 @router.post('/file-upload/')
 async def upload_file(
-        request: Request,
         file: UploadFile = File(...),
         db: AsyncSession = Depends(deps.get_db),
 ):
