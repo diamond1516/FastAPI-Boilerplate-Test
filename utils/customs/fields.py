@@ -22,14 +22,6 @@ class StorageManager(ABC):
     def delete(self, file):
         raise NotImplementedError
 
-    @abstractmethod
-    def get_url(self, filename):
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_path(self, filename):
-        raise NotImplementedError
-
     @classmethod
     def _generate_new_filename(cls, filename):
         name, ext = os.path.splitext(filename)
@@ -51,17 +43,10 @@ class LocalStorageManager(StorageManager):
         return file_path
 
     def delete(self, path):
-
         if os.path.exists(path):
             os.remove(path)
             return True
         return False
-
-    def get_path(self, filename):
-        pass
-
-    def get_url(self, filename):
-        pass
 
 
 class FileField(TypeDecorator):
@@ -74,23 +59,34 @@ class FileField(TypeDecorator):
         super().__init__(*args, **kwargs)
 
     def process_bind_param(self, value, dialect):
-
         if isinstance(value, UploadFile):
             file_path = self.storage_manager.save(value, self.upload_folder)
             return file_path
         return str(value)
 
     def process_result_value(self, value, dialect):
-        return value  # Qiymatni o'zgarmas qaytaradi
+        return FileString(value)
 
-    def file_name(self, value):
-        return os.path.basename(value) if value else None  # Fayl nomini qaytaradi
 
-    def file_url(self, value):
-        return self.storage_manager.get_url(value) if value else None  # Fayl URL sini qaytaradi
+class FileString(object):
+    def __init__(self, path):
+        self.path = path
 
-    def file_path(self, value):
-        return self.storage_manager.get_path(value, self.upload_folder) if value else None  # Fayl manzilini qaytaradi
+    @property
+    def name(self):
+        return self.path
 
-    def file_extension(self, value):
-        return os.path.splitext(value)[1] if value else None  # Fayl kengaytmasini qaytaradi
+    @property
+    def file_url(self):
+        return self.path
+
+    @property
+    def file_extension(self):
+        return os.path.splitext(self.path)[1]
+
+    @property
+    def file(self):
+        return open(self.path, 'rb')
+
+    def __str__(self):
+        return self.path
