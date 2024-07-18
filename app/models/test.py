@@ -1,7 +1,7 @@
 from sqlalchemy import Column
 from app.models.base import BaseModel
 from utils.customs.fields import FileField
-from app.core import LOCAL_STORAGE
+from app.core.storages import LOCAL_STORAGE
 
 
 class TestModel(BaseModel):
