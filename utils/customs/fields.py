@@ -21,7 +21,7 @@ class FileObject(object):
         return os.path.basename(self.path)
 
     @property
-    def file_url(self):
+    def url(self):
         return self.path
 
     @property
