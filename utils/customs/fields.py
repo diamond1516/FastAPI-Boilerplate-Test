@@ -13,9 +13,6 @@ class FileObject(object):
     def __init__(self, path):
         self.path = path
 
-    def __repr__(self):
-        return self.path
-
     def __str__(self):
         return str(self.path)
 
