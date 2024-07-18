@@ -1,8 +1,8 @@
 """add Test Item Model
 
-Revision ID: 64e99e4726b1
+Revision ID: 21fd71937859
 Revises: 
-Create Date: 2024-07-18 16:54:22.248283
+Create Date: 2024-07-18 17:59:21.636478
 
 """
 
@@ -11,10 +11,10 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
-from utils.customs.fields import FileField
+from utils.customs import FileField
 
 # revision identifiers, used by Alembic.
-revision: str = "64e99e4726b1"
+revision: str = "21fd71937859"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -25,7 +25,7 @@ def upgrade() -> None:
     op.create_table(
         "test_models",
         sa.Column(
-            "file", FileField(upload_folder='salom/', length=255), nullable=True
+            "file", FileField(length=255), nullable=True
         ),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("updated_at", sa.DateTime(timezone=True), nullable=True),
