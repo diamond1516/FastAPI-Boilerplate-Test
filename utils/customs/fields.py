@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import String
 from starlette.datastructures import UploadFile
 from sqlalchemy.types import TypeDecorator
@@ -8,8 +10,8 @@ from werkzeug.utils import secure_filename
 
 
 class StorageManager(ABC):
-    MEDIA_URL = ...
-    STATIC_URL = ...
+    MEDIA_URL = 'media/'
+    STATIC_URL = 'static/'
 
     @abstractmethod
     def save(self, file, upload_folder):
@@ -27,22 +29,31 @@ class StorageManager(ABC):
     def get_path(self, filename):
         raise NotImplementedError
 
+    @classmethod
+    def _generate_new_filename(cls, filename):
+        name, ext = os.path.splitext(filename)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        new_filename = f"{name}_{timestamp}{ext}"
+        return new_filename
+
 
 class LocalStorageManager(StorageManager):
-    upload_folder = None
 
     def save(self, file, upload_folder):
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(upload_folder, filename)
+        new_filename = self._generate_new_filename(secure_filename(file.filename))
+        folder_path = os.path.join(self.MEDIA_URL, upload_folder)
+        file_path = os.path.join(folder_path, new_filename)
+
+        os.makedirs(folder_path, exist_ok=True)
         with open(file_path, 'wb') as f:
             f.write(file.file.read())
         return file_path
 
     def delete(self, file):
-        file_path = os.path.join(file.filename, '')
+        pass
 
     def get_path(self, filename):
-        return os.path.join(self.upload_folder, filename)
+        pass
 
     def get_url(self, filename):
         pass
@@ -58,16 +69,13 @@ class FileField(TypeDecorator):
         super().__init__(*args, **kwargs)
 
     def process_bind_param(self, value, dialect):
-        print(value)
-        print(self.upload_folder)
-        print(self.storage_manager)
         if isinstance(value, UploadFile):
-            file_path = self.storage_manager.save(value)
-            print(file_path)
+            file_path = self.storage_manager.save(value, self.upload_folder)
             return file_path
         return str(value)
 
     def process_result_value(self, value, dialect):
+        print(value)
         if value:
             return open(value, 'rb')  # Faylni o'qib olish
         return value  # Qiymatni o'zgarmas qaytaradi
