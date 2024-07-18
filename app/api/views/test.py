@@ -52,7 +52,7 @@ async def create_product(
         db.add(image)
 
     await db.commit()
-    await db.refresh(product)
+    await db.refresh(product, attribute_names=['images'])
 
     return ProductSchema(
         name=product.name,
