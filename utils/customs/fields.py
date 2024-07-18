@@ -1,3 +1,4 @@
+import random
 from datetime import datetime
 
 from sqlalchemy import String
@@ -14,8 +15,8 @@ class FileObject(object):
         self.path = path
 
     @property
-    def name(self):
-        return self.path
+    def filename(self):
+        return os.path.basename(self.path)
 
     @property
     def file_url(self):
@@ -27,7 +28,7 @@ class FileObject(object):
 
     @property
     def file(self):
-        return UploadFile(self.path)
+        return UploadFile(self.path).file
 
     def __str__(self):
         return str(self.path)
@@ -47,8 +48,9 @@ class StorageManager(ABC):
     @classmethod
     def _generate_new_filename(cls, filename):
         name, ext = os.path.splitext(filename)
+        extra = str(random.randint(1, 100))
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        new_filename = f"{name}_{timestamp}{ext}"
+        new_filename = f"{name}{extra}_{timestamp}{ext}"
         return new_filename
 
 
@@ -81,7 +83,8 @@ class FileField(TypeDecorator):
         super().__init__(*args, **kwargs)
 
     def process_bind_param(self, value, dialect):
-        if isinstance(value, UploadFile):
+
+        if isinstance(value, (UploadFile, FileObject)):
             file_path = self.storage_manager.save(value, self.upload_folder)
             return file_path
         return str(value)
