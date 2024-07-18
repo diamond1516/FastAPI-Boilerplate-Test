@@ -1,9 +1,9 @@
 __all__ = (
-    'FileField'
+    'FileField',
+    'FileFieldFormat',
 )
 
 from utils.customs.fields import FileField
-
-
+from utils.customs.formats import FileFieldFormat
 
 

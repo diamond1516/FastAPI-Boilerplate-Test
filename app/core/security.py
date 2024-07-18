@@ -10,7 +10,7 @@ load_dotenv(dotenv_path)
 
 
 class MainSecurity(BaseSettings):
-    HOST = os.environ.get('HOST', "http://localhost")
+    HOST = os.environ.get('HOST', "http://localhost:8000/")
     EMAIL_HOST = os.environ.get('EMAIL_HOST', "smtp.gmail.com")
     EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 465))
     EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', "<PASSWORD>")
