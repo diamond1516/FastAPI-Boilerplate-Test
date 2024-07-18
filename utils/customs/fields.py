@@ -4,7 +4,6 @@ from sqlalchemy import String
 from starlette.datastructures import UploadFile
 from sqlalchemy.types import TypeDecorator
 from abc import ABC, abstractmethod
-from fastapi import Request
 
 import os
 from werkzeug.utils import secure_filename
@@ -28,10 +27,10 @@ class FileObject(object):
 
     @property
     def file(self):
-        return open(self.path, 'rb')
+        return UploadFile(self.path)
 
     def __str__(self):
-        return self.path
+        return str(self.path)
 
 
 class StorageManager(ABC):
@@ -63,13 +62,13 @@ class LocalStorageManager(StorageManager):
         os.makedirs(folder_path, exist_ok=True)
         with open(file_path, 'wb') as f:
             f.write(file.file.read())
-        return file_path
+
+        return file_path.replace(self.MEDIA_URL, '')
 
     def delete(self, path):
-        if os.path.exists(path):
-            os.remove(path)
-            return True
-        return False
+        file_path = os.path.join(self.MEDIA_URL, path)
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
 
 class FileField(TypeDecorator):

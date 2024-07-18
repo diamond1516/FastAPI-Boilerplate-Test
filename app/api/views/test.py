@@ -35,6 +35,7 @@ async def upload_file(
 
 
 class FormattedDatetime(str):
+    MEDIA_URL = ''
 
     @classmethod
     def __get_validators__(cls):
@@ -42,7 +43,7 @@ class FormattedDatetime(str):
 
     @classmethod
     def validate(cls, value):
-        return f'http://127.0.0.1:8001/{value}'
+        return f'http://127.0.0.1:8001/{cls.MEDIA_URL}{value}'
 
 
 class Image(BaseModel):
