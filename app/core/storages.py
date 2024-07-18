@@ -47,3 +47,4 @@ class LocalStorageManager(StorageManager):
 
 
 LOCAL_STORAGE = LocalStorageManager()
+

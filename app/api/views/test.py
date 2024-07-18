@@ -1,11 +1,12 @@
 from typing import List
-from fastapi import APIRouter, Depends, UploadFile, File
+from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
 from app.api import deps
-from app.models.test import TestModel
+from app.models.test import TestModel, Product
 from utils.customs import FileFieldFormat
+import json
 
 router = APIRouter(
     prefix="/test",
@@ -18,6 +19,36 @@ class Image(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ProductSchema(BaseModel):
+    name: str
+    price: float
+
+
+@router.post(
+    '/products/',
+)
+async def create_product(
+        data: str = Form(...),
+        images: List[UploadFile] = File(...),
+        db: AsyncSession = Depends(deps.get_db),
+):
+    data = json.loads(data)
+    product = Product(**data)
+    db.add(product)
+    await db.flush()
+
+    for image in images:
+        image = TestModel(
+            file=image,
+            product_id=product.id
+        )
+        db.add(image)
+
+    await db.commit()
+    await db.refresh(product)
+    return product
 
 
 @router.post(
