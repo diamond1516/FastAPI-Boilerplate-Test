@@ -16,8 +16,8 @@ class Settings(BaseSettings):
     SERVER_HOST: str = security.MAIN_SECURITY.HOST
     PROJECT_NAME: str = "FastAPI Boilerplate"
     ALGORITHM: str = "RS256"
-    PUBLIC_KEY_PATH: str = (security.BASE_DIR / 'keys/public_key.pem').read_text()
-    PRIVATE_KEY_PATH: str = (security.BASE_DIR / 'keys/private_key.pem').read_text()
+    PUBLIC_KEY: str = (security.BASE_DIR / 'keys/public_key.pem').read_text()
+    PRIVATE_KEY: str = (security.BASE_DIR / 'keys/private_key.pem').read_text()
     DEBUG: bool = True
 
     class Config:
