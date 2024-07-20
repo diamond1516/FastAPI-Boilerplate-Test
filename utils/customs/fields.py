@@ -10,11 +10,11 @@ from app.core import SETTINGS
 class FileObject(object):
     MEDIA_URL = SETTINGS.MEDIA_URL
 
-    def __init__(self, path):
+    def __init__(self, path: str):
         self.path = path
 
     def __str__(self):
-        return str(self.path)
+        return self.path
 
     @property
     def filename(self):
