@@ -22,7 +22,7 @@ class FileObject(object):
 
     @property
     def url(self):
-        return self.path
+        return f'/{self.MEDIA_URL}{self.path}'
 
     @property
     def extension(self):
